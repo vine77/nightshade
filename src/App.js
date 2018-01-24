@@ -21,6 +21,18 @@ class App extends Component {
     }
   }
 
+  addDay = () => {
+    this.setState((prevState, props) => ({
+      days: [
+        {
+          date: new Date().toJSON().slice(0, 10),
+          tasks: [],
+        },
+        ...prevState.days,
+      ],
+    }))
+  }
+
   addTask = () => {
     this.setState((prevState, props) => ({
       days: [
@@ -73,6 +85,9 @@ class App extends Component {
           <h1>Nightshade</h1>
         </header>
         <ul className="days">
+          <li>
+            <button onClick={this.addDay}>Add day</button>
+          </li>
           {this.state.days.map((day, index) => (
             <li key={day.date}>
               {day.date}
