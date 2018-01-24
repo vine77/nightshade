@@ -135,6 +135,11 @@ class App extends Component {
             <li key={day.date}>
               {day.date}
               <ul className="tasks">
+                {!dayIndex && (
+                  <li>
+                    <button onClick={this.addTask}>Add task</button>
+                  </li>
+                )}
                 {day.tasks.map((task, taskIndex) => (
                   <li key={taskIndex}>
                     {dayIndex ? (
@@ -162,11 +167,6 @@ class App extends Component {
                     )}
                   </li>
                 ))}
-                {!dayIndex && (
-                  <li>
-                    <button onClick={this.addTask}>Add task</button>
-                  </li>
-                )}
               </ul>
             </li>
           ))}
