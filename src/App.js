@@ -51,6 +51,21 @@ class App extends Component {
     }))
   }
 
+  removeTask = (index, event) => {
+    this.setState((prevState, props) => ({
+      days: [
+        {
+          ...prevState.days[0],
+          tasks: [
+            ...prevState.days[0].tasks.slice(0, index),
+            ...prevState.days[0].tasks.slice(index + 1),
+          ],
+        },
+        ...prevState.days.slice(1),
+      ],
+    }))
+  }
+
   updateTaskName = (index, event) => {
     const taskTitle = event.target.value
 
@@ -132,11 +147,18 @@ class App extends Component {
                         onChange={this.updateTaskCount.bind(this, taskIndex)}
                       />
                     )}
+                    {!dayIndex && (
+                      <button onClick={this.removeTask.bind(this, taskIndex)}>
+                        ✕
+                      </button>
+                    )}
                   </li>
                 ))}
-                <li>
-                  <button onClick={this.addTask}>Add task</button>
-                </li>
+                {!dayIndex && (
+                  <li>
+                    <button onClick={this.addTask}>Add task</button>
+                  </li>
+                )}
               </ul>
             </li>
           ))}
