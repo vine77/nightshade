@@ -71,6 +71,26 @@ class App extends Component {
     })
   }
 
+  updateTaskCount = (index, event) => {
+    const taskCount = event.target.value
+
+    this.setState((prevState, props) => {
+      return {
+        days: [
+          {
+            ...prevState.days[0],
+            tasks: [
+              ...prevState.days[0].tasks.slice(0, index),
+              { ...prevState.days[0].tasks[index], count: taskCount },
+              ...prevState.days[0].tasks.slice(index + 1),
+            ],
+          },
+          ...prevState.days.slice(1),
+        ],
+      }
+    })
+  }
+
   componentDidUpdate() {
     localStorage.setItem(
       'nightshade',
@@ -88,16 +108,30 @@ class App extends Component {
           <li>
             <button onClick={this.addDay}>Add day</button>
           </li>
-          {this.state.days.map((day, index) => (
+          {this.state.days.map((day, dayIndex) => (
             <li key={day.date}>
               {day.date}
               <ul className="tasks">
-                {day.tasks.map((task, index) => (
-                  <li key={index}>
-                    <input
-                      value={task.title}
-                      onChange={this.updateTaskName.bind(this, index)}
-                    />
+                {day.tasks.map((task, taskIndex) => (
+                  <li key={taskIndex}>
+                    {dayIndex ? (
+                      task.title
+                    ) : (
+                      <input
+                        value={task.title}
+                        onChange={this.updateTaskName.bind(this, taskIndex)}
+                      />
+                    )}
+                    :&nbsp;
+                    {dayIndex ? (
+                      task.count
+                    ) : (
+                      <input
+                        type="number"
+                        value={task.count}
+                        onChange={this.updateTaskCount.bind(this, taskIndex)}
+                      />
+                    )}
                   </li>
                 ))}
                 <li>
