@@ -6,31 +6,64 @@ class App extends Component {
     super(props)
 
     try {
-      this.state = { tasks: JSON.parse(localStorage.getItem('tasks')) || [] }
+      this.state = {
+        days: JSON.parse(localStorage.getItem('nightshade')).days,
+      }
     } catch (error) {
-      this.state = { tasks: [] }
+      this.state = {
+        days: [
+          {
+            date: new Date().toJSON().slice(0, 10),
+            tasks: [],
+          },
+        ],
+      }
     }
-
-    this.updateTaskName = this.updateTaskName.bind(this)
-    this.addTask = this.addTask.bind(this)
   }
 
-  addTask() {
-    this.setState({ tasks: [...this.state.tasks, { title: '' }] })
-  }
-
-  updateTaskName(index, event) {
-    this.setState({
-      tasks: [
-        ...this.state.tasks.slice(0, index),
-        { ...this.state.tasks[index], title: event.target.value },
-        ...this.state.tasks.slice(index + 1),
+  addTask = () => {
+    this.setState((prevState, props) => ({
+      days: [
+        {
+          ...prevState.days[0],
+          tasks: [
+            {
+              title: '',
+              count: 0,
+            },
+            ...prevState.days[0].tasks,
+          ],
+        },
+        ...prevState.days.slice(1),
       ],
+    }))
+  }
+
+  updateTaskName = (index, event) => {
+    const taskTitle = event.target.value
+
+    this.setState((prevState, props) => {
+      return {
+        days: [
+          {
+            ...prevState.days[0],
+            tasks: [
+              ...prevState.days[0].tasks.slice(0, index),
+              { ...prevState.days[0].tasks[index], title: taskTitle },
+              ...prevState.days[0].tasks.slice(index + 1),
+            ],
+          },
+          ...prevState.days.slice(1),
+        ],
+      }
     })
   }
 
   componentDidUpdate() {
-    localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
+    localStorage.setItem(
+      'nightshade',
+      JSON.stringify({ days: this.state.days }),
+    )
   }
 
   render() {
@@ -39,18 +72,25 @@ class App extends Component {
         <header>
           <h1>Nightshade</h1>
         </header>
-        <ul className="tasks">
-          {this.state.tasks.map((task, index) => (
-            <li key={index}>
-              <input
-                value={task.title}
-                onChange={this.updateTaskName.bind(this, index)}
-              />
+        <ul className="days">
+          {this.state.days.map((day, index) => (
+            <li key={day.date}>
+              {day.date}
+              <ul className="tasks">
+                {day.tasks.map((task, index) => (
+                  <li key={index}>
+                    <input
+                      value={task.title}
+                      onChange={this.updateTaskName.bind(this, index)}
+                    />
+                  </li>
+                ))}
+                <li>
+                  <button onClick={this.addTask}>Add task</button>
+                </li>
+              </ul>
             </li>
           ))}
-          <li>
-            <button onClick={this.addTask}>Add task</button>
-          </li>
         </ul>
       </div>
     )
