@@ -95,7 +95,7 @@ class App extends Component {
   }
 
   updateTaskCount = (index, event) => {
-    const taskCount = event.target.value
+    const taskCount = parseInt(event.target.value)
 
     this.setState((prevState, props) => {
       return {
@@ -134,6 +134,8 @@ class App extends Component {
           {this.state.days.map((day, dayIndex) => (
             <li key={day.date}>
               {day.date}
+              :&nbsp;
+              {day.tasks.reduce((sum, task) => sum + task.count, 0)}
               <ul className="tasks">
                 {!dayIndex && (
                   <li>
