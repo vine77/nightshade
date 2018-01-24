@@ -22,6 +22,14 @@ class App extends Component {
   }
 
   addDay = () => {
+    const date = new Date().toJSON().slice(0, 10)
+
+    // Disallow adding duplicate days
+    if (date === this.state.days[0].date) {
+      window.alert('Day already exists')
+      return
+    }
+
     this.setState((prevState, props) => ({
       days: [
         {
