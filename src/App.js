@@ -1,6 +1,26 @@
 import React, { Component } from 'react'
 import './App.css'
 
+function getCurrentDate() {
+  const date = new Date()
+  return (
+    date
+      .getFullYear()
+      .toString()
+      .padStart(2, '0') +
+    '-' +
+    date
+      .getMonth()
+      .toString()
+      .padStart(2, '0') +
+    '-' +
+    date
+      .getDate()
+      .toString()
+      .padStart(2, '0')
+  )
+}
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -13,7 +33,7 @@ class App extends Component {
       this.state = {
         days: [
           {
-            date: new Date().toJSON().slice(0, 10),
+            date: getCurrentDate(),
             tasks: [],
           },
         ],
@@ -22,7 +42,7 @@ class App extends Component {
   }
 
   addDay = () => {
-    const date = new Date().toJSON().slice(0, 10)
+    const date = getCurrentDate()
 
     // Disallow adding duplicate days
     if (date === this.state.days[0].date) {
@@ -33,7 +53,7 @@ class App extends Component {
     this.setState((prevState, props) => ({
       days: [
         {
-          date: new Date().toJSON().slice(0, 10),
+          date,
           tasks: [],
         },
         ...prevState.days,
