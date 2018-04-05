@@ -3,16 +3,14 @@ import './App.css'
 
 function getCurrentDate() {
   const date = new Date()
+
   return (
     date
       .getFullYear()
       .toString()
       .padStart(2, '0') +
     '-' +
-    date
-      .getMonth()
-      .toString()
-      .padStart(2, '0') +
+    (date.getMonth() + 1).toString().padStart(2, '0') +
     '-' +
     date
       .getDate()
