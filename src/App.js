@@ -113,7 +113,8 @@ class App extends Component {
   }
 
   updateTaskCount = (index, event) => {
-    const taskCount = parseInt(event.target.value, 10)
+    const taskCount =
+      event.target.value === '' ? 0 : parseInt(event.target.value, 10)
 
     this.setState((prevState, props) => {
       return {
