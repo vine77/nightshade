@@ -60,6 +60,15 @@ class App extends Component {
     })
   }
 
+  removeTodo = (index, event) => {
+    this.setState((prevState, props) => ({
+      todos: [
+        ...prevState.todos.slice(0, index),
+        ...prevState.todos.slice(index + 1),
+      ],
+    }))
+  }
+
   /* Tasks time tracking */
 
   addDay = () => {
@@ -181,6 +190,7 @@ class App extends Component {
                 value={todo.name}
                 onChange={this.updateTodoName.bind(this, todoIndex)}
               />
+              <button onClick={this.removeTodo.bind(this, todoIndex)}>✕</button>
             </li>
           ))}
         </ul>
