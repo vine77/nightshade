@@ -23,21 +23,44 @@ class App extends Component {
   constructor(props) {
     super(props)
 
+    const defaultTodos = []
+    const defaultDays = [{ date: getCurrentDate(), tasks: [] }]
+
     try {
       this.state = {
-        days: JSON.parse(localStorage.getItem('nightshade')).days,
+        todos:
+          JSON.parse(localStorage.getItem('nightshade')).todos || defaultTodos,
+        days:
+          JSON.parse(localStorage.getItem('nightshade')).days || defaultDays,
       }
     } catch (error) {
-      this.state = {
-        days: [
-          {
-            date: getCurrentDate(),
-            tasks: [],
-          },
-        ],
-      }
+      this.state = { todos: defaultTodos, days: defaultDays }
     }
   }
+
+  /* Todos */
+
+  addTodo = () => {
+    this.setState((prevState, props) => ({
+      todos: [{ name: '' }, ...prevState.todos],
+    }))
+  }
+
+  updateTodoName = (index, event) => {
+    const todoName = event.target.value
+
+    this.setState((prevState, props) => {
+      return {
+        todos: [
+          ...prevState.todos.slice(0, index),
+          { ...prevState.todos[index], name: todoName },
+          ...prevState.todos.slice(index + 1),
+        ],
+      }
+    })
+  }
+
+  /* Tasks time tracking */
 
   addDay = () => {
     const date = getCurrentDate()
@@ -136,7 +159,7 @@ class App extends Component {
   componentDidUpdate() {
     localStorage.setItem(
       'nightshade',
-      JSON.stringify({ days: this.state.days }),
+      JSON.stringify({ todos: this.state.todos, days: this.state.days }),
     )
   }
 
@@ -146,6 +169,23 @@ class App extends Component {
         <header>
           <h1>Nightshade</h1>
         </header>
+
+        <h2>To do</h2>
+        <ul className="todos">
+          <li>
+            <button onClick={this.addTodo}>Add todo</button>
+          </li>
+          {this.state.todos.map((todo, todoIndex) => (
+            <li key={todoIndex}>
+              <input
+                value={todo.name}
+                onChange={this.updateTodoName.bind(this, todoIndex)}
+              />
+            </li>
+          ))}
+        </ul>
+
+        <h2>Time tracking</h2>
         <ul className="days">
           <li>
             <button onClick={this.addDay}>Add day</button>
