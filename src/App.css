@@ -1,1 +1,25 @@
+body {
+  margin: 0;
+  padding: 2rem;
+}
 
+h1 {
+  margin-top: 0;
+}
+
+.todos,
+.days {
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.todos li:first-child {
+  margin-bottom: 1rem;
+}
+
+.days > li {
+  margin-bottom: 1rem;
+}
+.tasks {
+  list-style-type: disc;
+}
