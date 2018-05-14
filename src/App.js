@@ -66,7 +66,7 @@ class App extends Component {
           ...prevState.days[0],
           tasks: [
             {
-              title: '',
+              name: '',
               count: 0,
             },
             ...prevState.days[0].tasks,
@@ -93,7 +93,7 @@ class App extends Component {
   }
 
   updateTaskName = (index, event) => {
-    const taskTitle = event.target.value
+    const taskName = event.target.value
 
     this.setState((prevState, props) => {
       return {
@@ -102,7 +102,7 @@ class App extends Component {
             ...prevState.days[0],
             tasks: [
               ...prevState.days[0].tasks.slice(0, index),
-              { ...prevState.days[0].tasks[index], title: taskTitle },
+              { ...prevState.days[0].tasks[index], name: taskName },
               ...prevState.days[0].tasks.slice(index + 1),
             ],
           },
@@ -164,10 +164,10 @@ class App extends Component {
                 {day.tasks.map((task, taskIndex) => (
                   <li key={taskIndex}>
                     {dayIndex ? (
-                      task.title
+                      task.name
                     ) : (
                       <input
-                        value={task.title}
+                        value={task.name}
                         onChange={this.updateTaskName.bind(this, taskIndex)}
                       />
                     )}
