@@ -21,7 +21,15 @@ li {
 }
 
 button {
+  border-radius: 3px;
+  background-color: #fafafa;
   font-size: 1rem;
+}
+button:hover, button:focus {
+  background-color: #eee;
+}
+button:active {
+  background-color: #ddd;
 }
 
 .todos,
