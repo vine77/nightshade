@@ -190,7 +190,12 @@ class App extends Component {
                 value={todo.name}
                 onChange={this.updateTodoName.bind(this, todoIndex)}
               />
-              <button onClick={this.removeTodo.bind(this, todoIndex)}>✕</button>
+              <button
+                title="Delete todo"
+                onClick={this.removeTodo.bind(this, todoIndex)}
+              >
+                ✕
+              </button>
             </li>
           ))}
         </ul>
@@ -232,7 +237,10 @@ class App extends Component {
                       />
                     )}
                     {!dayIndex && (
-                      <button onClick={this.removeTask.bind(this, taskIndex)}>
+                      <button
+                        title="Delete task"
+                        onClick={this.removeTask.bind(this, taskIndex)}
+                      >
                         ✕
                       </button>
                     )}
