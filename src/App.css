@@ -16,6 +16,10 @@ input[type="number"] {
   width: 50px;
 }
 
+small input {
+  font-size: smaller;
+}
+
 li {
   margin-bottom: 0.25rem;
 }

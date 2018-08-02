@@ -100,6 +100,7 @@ class App extends Component {
             {
               name: '',
               count: 0,
+              notes: '',
             },
             ...prevState.days[0].tasks,
           ],
@@ -156,6 +157,29 @@ class App extends Component {
             tasks: [
               ...prevState.days[0].tasks.slice(0, index),
               { ...prevState.days[0].tasks[index], count: taskCount },
+              ...prevState.days[0].tasks.slice(index + 1),
+            ],
+          },
+          ...prevState.days.slice(1),
+        ],
+      }
+    })
+  }
+
+  updateTaskNotes = (index, event) => {
+    const taskNotes = event.target.value
+
+    this.setState((prevState, props) => {
+      return {
+        days: [
+          {
+            ...prevState.days[0],
+            tasks: [
+              ...prevState.days[0].tasks.slice(0, index),
+              {
+                ...prevState.days[0].tasks[index],
+                notes: taskNotes,
+              },
               ...prevState.days[0].tasks.slice(index + 1),
             ],
           },
@@ -234,6 +258,18 @@ class App extends Component {
                         >
                           ✕
                         </button>
+                        <small>
+                          <details>
+                            <summary>Add notes</summary>
+                            <input
+                              value={task.notes}
+                              onChange={this.updateTaskNotes.bind(
+                                this,
+                                taskIndex,
+                              )}
+                            />
+                          </details>
+                        </small>
                       </li>
                     ))}
                   </div>
@@ -242,6 +278,11 @@ class App extends Component {
                     {day.tasks.map((task, taskIndex) => (
                       <li key={taskIndex}>
                         {task.name}:&nbsp;{task.count}
+                        {task.notes && (
+                          <div>
+                            <small>Notes: {task.notes}</small>
+                          </div>
+                        )}
                       </li>
                     ))}
                   </div>
