@@ -211,41 +211,41 @@ class App extends Component {
               :&nbsp;
               {day.tasks.reduce((sum, task) => sum + task.count, 0)}
               <ul className="tasks">
-                {!dayIndex && (
-                  <li>
-                    <button onClick={this.addTask}>Add task</button>
-                  </li>
+                {!dayIndex ? (
+                  <div>
+                    <li>
+                      <button onClick={this.addTask}>Add task</button>
+                    </li>
+                    {day.tasks.map((task, taskIndex) => (
+                      <li key={taskIndex}>
+                        <input
+                          value={task.name}
+                          onChange={this.updateTaskName.bind(this, taskIndex)}
+                        />
+                        :&nbsp;
+                        <input
+                          type="number"
+                          value={task.count}
+                          onChange={this.updateTaskCount.bind(this, taskIndex)}
+                        />
+                        <button
+                          title="Delete task"
+                          onClick={this.removeTask.bind(this, taskIndex)}
+                        >
+                          ✕
+                        </button>
+                      </li>
+                    ))}
+                  </div>
+                ) : (
+                  <div>
+                    {day.tasks.map((task, taskIndex) => (
+                      <li key={taskIndex}>
+                        {task.name}:&nbsp;{task.count}
+                      </li>
+                    ))}
+                  </div>
                 )}
-                {day.tasks.map((task, taskIndex) => (
-                  <li key={taskIndex}>
-                    {dayIndex ? (
-                      task.name
-                    ) : (
-                      <input
-                        value={task.name}
-                        onChange={this.updateTaskName.bind(this, taskIndex)}
-                      />
-                    )}
-                    :&nbsp;
-                    {dayIndex ? (
-                      task.count
-                    ) : (
-                      <input
-                        type="number"
-                        value={task.count}
-                        onChange={this.updateTaskCount.bind(this, taskIndex)}
-                      />
-                    )}
-                    {!dayIndex && (
-                      <button
-                        title="Delete task"
-                        onClick={this.removeTask.bind(this, taskIndex)}
-                      >
-                        ✕
-                      </button>
-                    )}
-                  </li>
-                ))}
               </ul>
             </li>
           ))}
