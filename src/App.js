@@ -249,6 +249,7 @@ class App extends Component {
                         :&nbsp;
                         <input
                           type="number"
+                          min="0"
                           value={task.count}
                           onChange={this.updateTaskCount.bind(this, taskIndex)}
                         />
