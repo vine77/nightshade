@@ -260,8 +260,10 @@ class App extends Component {
                           ✕
                         </button>
                         <small>
-                          <details>
-                            <summary>Add notes</summary>
+                          <details open={task.notes}>
+                            <summary>
+                              {task.notes ? 'Notes:' : 'Add notes:'}
+                            </summary>
                             <input
                               value={task.notes}
                               onChange={this.updateTaskNotes.bind(
