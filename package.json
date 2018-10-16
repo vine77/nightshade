@@ -5,7 +5,7 @@
   "dependencies": {
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -15,7 +15,7 @@
     "format": "prettier --semi=false --single-quote --trailing-comma=all --write --list-different '{src,test}/**/*.{jsx,js,json,css}'"
   },
   "devDependencies": {
-    "prettier": "^1.11.1"
+    "prettier": "^1.14.3"
   },
   "prettier": {
     "semi": false,
