@@ -224,7 +224,7 @@ class App extends Component {
           ))}
         </ul>
 
-        <h2>Time tracking</h2>
+        <h2>Pomodori</h2>
         <ul className="days">
           <li>
             <button onClick={this.addDay}>Add day</button>
